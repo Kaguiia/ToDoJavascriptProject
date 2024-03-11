@@ -1,0 +1,129 @@
+body {    
+    background-color: rgb(240, 252, 204);
+    display: flex;    
+    justify-content: center;
+    align-items: center;    
+    height: 100vh;
+    width: 100vw;
+    margin: 0;   
+    padding: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+.container {
+    text-align: center;    
+    color: white;
+    background-color: #203c8c;    
+    padding: 20px;
+    border-radius: 8px;    
+    max-width: 600px;
+    margin-top: 50px; 
+}
+.taskinput, .btnadd, input[type="radio"] {
+    padding: 8px;    
+    margin-right: 10px;
+    border: 1px solid #ccc;    
+    border-radius: 4px;
+}
+.btnadd {    
+    padding: 8px 20px;
+    border: none;   
+    border-radius: 4px;
+    background-color: #18843c;   
+    color: #fff;
+    cursor: pointer;}
+.btnadd:hover {
+    background-color: #084c3c;
+}
+.task-blocks {
+    display: flex;    
+    gap: 50px;
+    margin: 50px;
+}
+.task-block {
+    display: flex;
+    padding: 20px 30px;    
+    color: white;
+    flex-direction: column;    
+    align-items: center;
+    gap: 10px;   
+    border: 1px solid #DEDEDE;
+    border-radius: 5px;
+    max-width: 300px;
+}
+.task-block:nth-child(1) {
+    background-color: #18843c;
+}
+.task-block:nth-child(2) {
+    background-color: #f89c0c;
+}
+.task-block:nth-child(3) {
+    background-color: #084c3c;
+}
+.task-block:nth-child(4) {
+    background-color: #f04444;
+}
+.text-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.text {
+    border: 1px solid #ccc;    
+    padding: 5px 10px;
+    background-color: #fff;    
+    color: black;
+    margin-right: 10px;    
+    border-radius: 5px;
+    width: 120px;
+    align-items: center;
+    justify-content: space-between;
+}
+.trash-icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-image: url('https://www.freeiconspng.com/thumbs/trash-can-icon/trash-can-icon-3.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.text-container:hover .trash-icon {
+    opacity: 1;
+}
+
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+  }
+  
+.loader {
+    border: 8px solid #f3f3f3; 
+    border-top: 8px solid #3498db; 
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+@keyframes spin {
+    0% { 
+        transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+  }

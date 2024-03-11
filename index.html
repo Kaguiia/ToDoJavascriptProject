@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <title>to do app</title>
+</head>
+
+<body>
+    <div class="container">
+        <form>
+            <input type="text" placeholder="Enter task..." class="taskinput">
+            <input type="submit" value="Add" class="btnadd">
+            <br><br>
+            <label><input type="radio" name="status" value="active"> ACTIVE</label>
+            <label><input type="radio" name="status" value="on_hold"> ON HOLD</label>
+            <label><input type="radio" name="status" value="finished"> FINISHED</label>
+            <label><input type="radio" name="status" value="canceled"> CANCELED</label>
+        </form>
+    </div>
+    <div class="task-blocks">
+        <div class="task-block" id="active">
+            <h3>ACTIVE</h3>
+            <p id="active-column" data-status="active"> </p>
+        </div>
+        <div class="task-block" id="on_hold">
+            <h3>ON HOLD</h3>
+            <p id="on_hold-column" data-status="on_hold"></p>
+        </div>
+        <div class="task-block" id="finished">
+            <h3>FINISHED</h3>
+            <p id="finished-column" data-status="finished"></p>
+        </div>
+        <div class="task-block" id="canceled">
+            <h3>CANCELED</h3>
+            <p id="canceled-column" data-status="canceled"></p>
+        </div>
+    </div>
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
