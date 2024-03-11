@@ -11,15 +11,11 @@ document.querySelector('form').addEventListener('submit', function(event) {
   showLoader()
   const inputText = document.querySelector('input[type="text"]').value;
   const selectedStatus = document.querySelector('input[name="status"]:checked').value;
-  fetch('https://puzzled-ionian-actor.glitch.me/todo', {
-    method: 'POST',
-    body: JSON.stringify({
+  axios.post('https://puzzled-ionian-actor.glitch.me/todo', {
       title: inputText,
       status: selectedStatus
-    })
   })
-  .then(response => response.json())
-  .then(data => {
+  .then (({data}) => {
     const textContainer = document.createElement('div')
     textContainer.classList.add('text-container')
     const textElement = document.createElement('div')
