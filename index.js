@@ -1,4 +1,4 @@
-// // const axios = require('axios');
+//// const axios = require('axios');
 function showLoader() {
   document.querySelector('.loader-container').style.display = 'flex';
 }
@@ -31,14 +31,11 @@ document.querySelector('form').addEventListener('submit', function(event) {
     trashIcon.addEventListener('click', function() {
       showLoader()
       textContainer.remove();
-      fetch(`https://puzzled-ionian-actor.glitch.me/todo/${data.id}`, {
-        method: 'DELETE'
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        hideLoader();
-      })
+      axios.delete(`https://puzzled-ionian-actor.glitch.me/todo/${data.id}`)
+      .then(response => {
+        console.log(response.data)
+        hideLoader()
+      }) 
       .catch(error => {
         console.error(error)
         hideLoader()
@@ -47,7 +44,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
     textContainer.appendChild(textElement)
     textContainer.appendChild(trashIcon)
     const statusColumn = document.getElementById(`${selectedStatus}-column`)
-    statusColumn.appendChild(textContainer); 
+    statusColumn.appendChild(textContainer);
     document.querySelector('input[type="text"]').value = ''
   })
   .catch(error => {
@@ -58,17 +55,16 @@ document.querySelector('form').addEventListener('submit', function(event) {
 
 // part two 
 let todos = []
-fetch("https://puzzled-ionian-actor.glitch.me/todo")
-  .then(response => response.json())
-  .then(data => {
-    todos = data
+axios.get("https://puzzled-ionian-actor.glitch.me/todo")
+  .then(response => {
+    todos = response.data;
     hideLoader()
-    const todoItems = data
+    const todoItems = response.data
     todoItems.forEach(item => {
-      const taskContainer = document.getElementById(item.status)
+      const taskContainer = document.getElementById(item.status);
       if (taskContainer) {
         const textContainer = document.createElement('div')
-        textContainer.classList.add('text-container') 
+        textContainer.classList.add('text-container')
         textContainer.dataset.todoId = item.id;
         const textElement = document.createElement('div')
         textElement.classList.add('text')
@@ -79,12 +75,9 @@ fetch("https://puzzled-ionian-actor.glitch.me/todo")
         trashIcon.addEventListener('click', function() {
           textContainer.remove();
           showLoader()
-          fetch(`https://puzzled-ionian-actor.glitch.me/todo/${item.id}`, { ///fetch(`http://localhost:3000/todo/${item.id}`, {
-            method: 'DELETE'
-          })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data)
+          axios.delete(`https://puzzled-ionian-actor.glitch.me/todo/${item.id}`)
+          .then(response => {
+            console.log(response.data)
             hideLoader()
           })
           .catch(error => console.error(error));
@@ -101,15 +94,14 @@ fetch("https://puzzled-ionian-actor.glitch.me/todo")
             if (event.key === 'Enter') {
               showLoader()
               textElement.textContent = inputField.value;
-              textContainer.replaceChild(textElement, inputField)
-              fetch(`https://puzzled-ionian-actor.glitch.me/todo/${item.id}`, {
-                method: 'PUT',
-                body: JSON.stringify({title: textElement.textContent, status: item.status}),
+              textContainer.replaceChild(textElement, inputField);
+              axios.put(`https://puzzled-ionian-actor.glitch.me/todo/${item.id}`, {
+                title: textElement.textContent,
+                status: item.status
               })
-              .then(response => response.json())
-              .then(data => {
-                console.log(data)
-                hideLoader();
+              .then(response => {
+                console.log(response.data)
+                hideLoader()
               })
               .catch(error => {
                 console.error(error)
@@ -119,11 +111,8 @@ fetch("https://puzzled-ionian-actor.glitch.me/todo")
         });
       }
     });
-    
   })
-  .catch(error => {
-    console.error(error)
-  })
+  .catch(error => console.error(error))
   //part three
   $(function() {
     $(".task-block").sortable({
@@ -132,18 +121,14 @@ fetch("https://puzzled-ionian-actor.glitch.me/todo")
         stop: async function(event, ui) {
             const todoId = ui.item[0].dataset.todoId;
             const status = ui.item.parent().attr("id");
-            const newText = ui.item.find('.text').text(); 
+            const newText = ui.item.find('.text').text();
             showLoader();
             try {
-                const response = await fetch(`https://puzzled-ionian-actor.glitch.me/todo/${todoId}`, {
-                    method: 'PUT',
-                    body: JSON.stringify({
-                        status: status,
-                        title: newText 
-                    })
+                const response = await axios.put(`https://puzzled-ionian-actor.glitch.me/todo/${todoId}`, {
+                    status: status,
+                    title: newText 
                 });
-                const updatedData = await response.json();
-                console.log(updatedData);
+                console.log(response.data);
             } catch (error) {
                 console.error(error);
             } finally {
